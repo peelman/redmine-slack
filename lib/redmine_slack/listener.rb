@@ -222,7 +222,8 @@ private
     start_time = Setting.plugin_redmine_slack[:quiet_hours_start]
     end_time = Setting.plugin_redmine_slack[:quiet_hours_end]
 
-    return now.hour > start_time || now.hour < end_time
+    return false
+    #return now.hour > start_time || now.hour < end_time
   end
 
 	def url_for_project(proj)
