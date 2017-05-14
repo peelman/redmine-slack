@@ -2,6 +2,9 @@ require 'httpclient'
 
 class SlackListener < Redmine::Hook::Listener
 	def controller_issues_new_after_save(context={})
+    return if is_it_quiet_hours?
+    return unless send_today?
+    
 		issue = context[:issue]
 
 		channel = channel_for_project issue.project
@@ -38,6 +41,9 @@ class SlackListener < Redmine::Hook::Listener
 	end
 
 	def controller_issues_edit_after_save(context={})
+    return if is_it_quiet_hours?
+    return unless send_today?
+    
 		issue = context[:issue]
 		journal = context[:journal]
 
@@ -58,6 +64,9 @@ class SlackListener < Redmine::Hook::Listener
 	end
 
 	def model_changeset_scan_commit_for_issue_ids_pre_issue_update(context={})
+    return if is_it_quiet_hours?
+    return unless send_today?
+    
 		issue = context[:issue]
 		journal = issue.current_journal
 		changeset = context[:changeset]
@@ -105,6 +114,9 @@ class SlackListener < Redmine::Hook::Listener
 	end
 
 	def controller_wiki_edit_after_save(context = { })
+    return if is_it_quiet_hours?
+    return unless send_today?
+    
 		return unless Setting.plugin_redmine_slack[:post_wiki_updates] == '1'
 
 		project = context[:project]
@@ -182,6 +194,36 @@ private
 			}))
 		end
 	end
+
+  def send_today?
+    now = Time.now
+    case now.wday
+    when 0
+      return Setting.plugin_redmine_slack[:settings_day_of_week_sunday]
+    when 1
+      return Setting.plugin_redmine_slack[:settings_day_of_week_monday]
+    when 2
+      return Setting.plugin_redmine_slack[:settings_day_of_week_Tuesday]
+    when 3
+      return Setting.plugin_redmine_slack[:settings_day_of_week_wednesday]
+    when 4
+      return Setting.plugin_redmine_slack[:settings_day_of_week_thursday]
+    when 5
+      return Setting.plugin_redmine_slack[:settings_day_of_week_friday]
+    when 6
+      return Setting.plugin_redmine_slack[:settings_day_of_week_saturday]
+    else
+      return true
+    end
+  end
+
+  def is_it_quiet_hours?
+    now = Time.now
+    start_time = Setting.plugin_redmine_slack[:quiet_hours_start]
+    end_time = Setting.plugin_redmine_slack[:quiet_hours_end]
+
+    return now.hour > start_time || now.hour < end_time
+  end
 
 	def url_for_project(proj)
 		return nil if proj.blank?

@@ -49,7 +49,6 @@
   <label for="settings_quiet_hours_start">Quiet Hours</label>
   <input type="text" id="settings_quiet_hours_start" value="<%= settings['quiet_hours_start'] %>" name="settings[quiet_hours_start]" placeholder="17:00" /> - 
   <input type="text" id="settings_quiet_hours_end" value="<%= settings['quiet_hours_end'] %>" name="settings[quiet_hours_end]" placeholder="07:00"/> 
-  <input type="checkbox" id="settings_quiet_hours_weekends" value="1" name="settings[settings_quiet_hours_weekends]" <%= settings['settings_quiet_hours_weekends'] == '1' ? 'checked="checked"' : '' %> />
 </p>
 
 <p>
@@ -57,7 +56,7 @@
 </p>
 
 <p>
-  <label>Days of the Week</label>
+  <h3>Days of the Week</h3>
   <label for="settings_day_of_week_monday">Monday</label><input type="checkbox" id="settings_day_of_week_monday" value="1" name="settings[settings_day_of_week_monday]" <%= settings['settings_day_of_week_monday'] == '1' ? 'checked="checked"' : '' %> /><br />
   <label for="settings_day_of_week_tuesday">Tuesday</label><input type="checkbox" id="settings_day_of_week_tuesday" value="1" name="settings[settings_day_of_week_tuesday]" <%= settings['settings_day_of_week_tuesday'] == '1' ? 'checked="checked"' : '' %> /><br />
   <label for="settings_day_of_week_wednesday">Wednesday</label><input type="checkbox" id="settings_day_of_week_wednesday" value="1" name="settings[settings_day_of_week_wednesday]" <%= settings['settings_day_of_week_wednesday'] == '1' ? 'checked="checked"' : '' %> /><br />
