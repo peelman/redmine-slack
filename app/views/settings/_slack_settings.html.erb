@@ -46,11 +46,27 @@
 </p>
 
 <p>
-	<label for="settings_quiet_hours_start">Quiet Hours</label>
-	<input type="text" id="settings_quiet_hours_start" value="<%= settings['quiet_hours_start'] %>" name="settings[quiet_hours_start]" /> - 
-	<input type="text" id="settings_quiet_hours_end" value="<%= settings['quiet_hours_end'] %>" name="settings[quiet_hours_end]" /> 
+  <label for="settings_quiet_hours_start">Quiet Hours</label>
+  <input type="text" id="settings_quiet_hours_start" value="<%= settings['quiet_hours_start'] %>" name="settings[quiet_hours_start]" placeholder="17:00" /> - 
+  <input type="text" id="settings_quiet_hours_end" value="<%= settings['quiet_hours_end'] %>" name="settings[quiet_hours_end]" placeholder="07:00"/> 
+  <input type="checkbox" id="settings_quiet_hours_weekends" value="1" name="settings[settings_quiet_hours_weekends]" <%= settings['settings_quiet_hours_weekends'] == '1' ? 'checked="checked"' : '' %> />
 </p>
 
 <p>
-	Don't send messages to slack between these hours.
+  Don't send messages to Slack between these hours.
+</p>
+
+<p>
+  <label>Days of the Week</label>
+  <label for="settings_quiet_hours_start">Monday</label><input type="checkbox" id="settings_day_of_week_monday" value="1" name="settings[settings_day_of_week_monday]" <%= settings['settings_day_of_week_monday'] == '1' ? 'checked="checked"' : '' %> />
+  <label for="settings_quiet_hours_start">Tuesday</label><input type="checkbox" id="settings_day_of_week_tuesday" value="1" name="settings[settings_day_of_week_tuesday]" <%= settings['settings_day_of_week_tuesday'] == '1' ? 'checked="checked"' : '' %> />
+  <label for="settings_quiet_hours_start">Wednesday</label><input type="checkbox" id="settings_day_of_week_wednesday" value="1" name="settings[settings_day_of_week_wednesday]" <%= settings['settings_day_of_week_wednesday'] == '1' ? 'checked="checked"' : '' %> />
+  <label for="settings_quiet_hours_start">Thursday</label><input type="checkbox" id="settings_day_of_week_thursday" value="1" name="settings[settings_day_of_week_thursday]" <%= settings['settings_day_of_week_thursday'] == '1' ? 'checked="checked"' : '' %> />
+  <label for="settings_quiet_hours_start">Friday</label><input type="checkbox" id="settings_day_of_week_friday" value="1" name="settings[settings_day_of_week_friday]" <%= settings['settings_day_of_week_friday'] == '1' ? 'checked="checked"' : '' %> />
+  <label for="settings_quiet_hours_start">Saturday</label><input type="checkbox" id="settings_day_of_week_saturday" value="1" name="settings[settings_day_of_week_saturday]" <%= settings['settings_day_of_week_saturday'] == '1' ? 'checked="checked"' : '' %> />
+  <label for="settings_quiet_hours_start">Sunday</label><input type="checkbox" id="settings_day_of_week_sunday" value="1" name="settings[settings_day_of_week_sunday]" <%= settings['settings_day_of_week_sunday'] == '1' ? 'checked="checked"' : '' %> />
+</p>
+
+<p>
+  Only send messages on these days.
 </p>
