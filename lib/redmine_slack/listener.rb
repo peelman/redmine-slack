@@ -219,11 +219,17 @@ private
 
   def is_it_quiet_hours?
     t_now = Time.now
+
     start_hour = Setting.plugin_redmine_slack[:quiet_hours_start_hour].to_i
+    start_minute = Setting.plugin_redmine_slack[:quiet_hours_start_minute].to_i
     end_hour = Setting.plugin_redmine_slack[:quiet_hours_end_hour].to_i
-    day_modifier = (start_hour > end_hour) ? 1 : 0
-    t_start = Time.new(t_now.year, t_now.month, t_now.day, start_hour, t_now.min)
-    t_end = Time.new(t_now.year, t_now.month, t_now.day + day_modifier, end_hour, t_now.min)
+    end_minute = Setting.plugin_redmine_slack[:quiet_hours_end_minute].to_i
+
+    start_day_modifier = (start_hour > Time.now.hour) ? -1 : 0
+    end_day_modifier = (start_hour > end_hour && start_hour < Time.now.hour) ? 1 : 0
+
+    t_start = Time.new(t_now.year, t_now.month, t_now.day + start_day_modifier, start_hour, start_minute)
+    t_end = Time.new(t_now.year, t_now.month, t_now.day + end_day_modifier, end_hour, end_minute)
     
     if t_now <= t_start
       Rails.logger.info "Quiet Hours Not In Effect (now #{t_now.inspect}) (start: #{t_start.inspect}) (end: #{t_end.inspect})"
@@ -233,7 +239,7 @@ private
       return false
     end
     
-    Rails.logger.info "Quiet Hours In Effect "
+    Rails.logger.info "Quiet Hours In Effect  (now #{t_now.inspect}) (start: #{t_start.inspect}) (end: #{t_end.inspect})"
     return true
     #return now.hour > start_time || now.hour < end_time
   end
