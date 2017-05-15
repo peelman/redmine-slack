@@ -226,12 +226,12 @@ private
     
     if t_now <= t_start
       return false
-      logger.info "Quiet Hours Not In Effect"
+      Rails.logger.info "Quiet Hours Not In Effect"
     elsif t_now >= t_end
-      logger.info "Quiet Hours Not In Effect"
+      Rails.logger.info "Quiet Hours Not In Effect"
       return false
     end
-    logger.info "Quiet Hours In Effect"
+    Rails.logger.info "Quiet Hours In Effect"
     return true
     #return now.hour > start_time || now.hour < end_time
   end
