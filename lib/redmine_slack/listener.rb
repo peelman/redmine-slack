@@ -222,13 +222,13 @@ private
     start_hour = Setting.plugin_redmine_slack[:quiet_hours_start_hour].to_i
     end_hour = Setting.plugin_redmine_slack[:quiet_hours_end_hour].to_i
     t_start = Time.new(t_now.year, t_now.month, t_now.day, start_hour, t_now.min)
-    t_end = Time.new(t_now.year, t_now.month, t_now.day, end_hour, t_now.min)
+    t_end = Time.new(t_now.year, t_now.month, t_now.day + (start_hour > end_hour) ? 1 : 0, end_hour, t_now.min)
     
     if t_now <= t_start
       return false
-      Rails.logger.info "Quiet Hours Not In Effect"
+      Rails.logger.info "Quiet Hours Not In Effect (too late) (now #{t_now.inspect}) (start: #{t_start.inspect}) (end: #{t_end.inspect})"
     elsif t_now >= t_end
-      Rails.logger.info "Quiet Hours Not In Effect"
+      Rails.logger.info "Quiet Hours Not In Effect (too early)  (now #{t_now.inspect}) (start: #{t_start.inspect}) (end: #{t_end.inspect})"
       return false
     end
     Rails.logger.info "Quiet Hours In Effect"
