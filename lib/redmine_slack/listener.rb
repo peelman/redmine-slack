@@ -218,11 +218,21 @@ private
   end
 
   def is_it_quiet_hours?
-    now = Time.now
-    start_time = Setting.plugin_redmine_slack[:quiet_hours_start]
-    end_time = Setting.plugin_redmine_slack[:quiet_hours_end]
-
-    return false
+    t_now = Time.now
+    start_hour = Setting.plugin_redmine_slack[:quiet_hours_start_hour].to_i
+    end_hour = Setting.plugin_redmine_slack[:quiet_hours_end_hour].to_i
+    t_start = Time.new(now.year, now.month, now.day, start_hour, now.minute)
+    t_end = Time.new(now.year, now.month, now.day, end_hour, now.minute)
+    
+    if t_now <= t_start
+      return false
+      flash.notice = "Quiet Hours Not In Effect"
+    elsif t_now >= t_end
+      flash.notice = "Quiet Hours Not In Effect"
+      return false
+    end
+    flash.alert = "Quiet Hours In Effect"
+    return true
     #return now.hour > start_time || now.hour < end_time
   end
 
