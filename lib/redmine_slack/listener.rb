@@ -221,8 +221,8 @@ private
     t_now = Time.now
     start_hour = Setting.plugin_redmine_slack[:quiet_hours_start_hour].to_i
     end_hour = Setting.plugin_redmine_slack[:quiet_hours_end_hour].to_i
-    t_start = Time.new(t_now.year, t_now.month, t_now.day, start_hour, t_now.minute)
-    t_end = Time.new(t_now.year, t_now.month, t_now.day, end_hour, t_now.minute)
+    t_start = Time.new(t_now.year, t_now.month, t_now.day, start_hour, t_now.min)
+    t_end = Time.new(t_now.year, t_now.month, t_now.day, end_hour, t_now.min)
     
     if t_now <= t_start
       return false
