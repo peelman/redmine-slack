@@ -226,12 +226,13 @@ private
     t_end = Time.new(t_now.year, t_now.month, t_now.day + day_modifier, end_hour, t_now.min)
     
     if t_now <= t_start
-      return false
       Rails.logger.info "Quiet Hours Not In Effect (now #{t_now.inspect}) (start: #{t_start.inspect}) (end: #{t_end.inspect})"
+      return false
     elsif t_now >= t_end
       Rails.logger.info "Quiet Hours Not In Effect (now #{t_now.inspect}) (start: #{t_start.inspect}) (end: #{t_end.inspect})"
       return false
     end
+    
     Rails.logger.info "Quiet Hours In Effect "
     return true
     #return now.hour > start_time || now.hour < end_time
